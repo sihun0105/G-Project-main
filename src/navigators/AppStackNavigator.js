@@ -5,6 +5,7 @@ import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import SearchScreen from '../screens/SearchScreen/SearchScreen';
 import StoreScreen from '../screens/StoreScreen/Store';
 import ChatList from '../screens/ChatList/ChatList';
+import ChatStackScreen from '../screens/ChatStackScreen/ChatStackScreen'
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Feather from 'react-native-vector-icons/Feather';
@@ -51,7 +52,7 @@ const AppNavigator = () => (
     />
     <Tab.Screen
       name="CHAT"
-      component={ChatList}
+      component={ChatStackScreen}
       options={{
         tabBarIcon: ({size}) => (
           <MaterialCommunityIcons

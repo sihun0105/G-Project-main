@@ -4,6 +4,7 @@ import FormButton from '../../components/shared/FormButton';
 import FormInput from '../../components/shared/FormInput';
 import { COLORS } from '../../components/constants/theme';
 import { signIn } from '../../utils/auth';
+import { error } from 'react-native-gifted-chat/lib/utils';
 
 const SigninScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -11,7 +12,12 @@ const SigninScreen = ({navigation}) => {
 
   const handleOnSubmit = () => {
     if (email != '' && password != '') {
+      try{
       signIn(email, password);
+      }
+      catch{
+        console.log('err')
+      }
     }
   };
 

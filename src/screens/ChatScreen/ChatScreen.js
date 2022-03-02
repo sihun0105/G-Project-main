@@ -1,22 +1,47 @@
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import AppText from '../../components/AppText';
-import Screen from '../../components/Screen';
+import React, { useState, useCallback, useEffect } from 'react'
+import {StyleSheet, Text, View} from 'react-native';
+import { GiftedChat } from 'react-native-gifted-chat'
 
-function ChatScreen(props) {
+const ChatScreen= () => {
+  const [messages, setMessages] = useState([]);
+ useEffect(() => {
+    setMessages([
+      {
+        _id: 1,
+        text: 'Hello developer',
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+      {
+        _id: 2,
+        text: 'Hello developer',
+        createdAt: new Date(),
+        user: {
+          _id: 1,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+    ])
+  }, [])
+
+  const onSend = useCallback((messages = []) => {
+    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+  }, [])
   return (
-    <Screen style={styles.screen}>
-      <AppText>ChatScreen</AppText>
-    </Screen>
-  );
-}
+    
+    <GiftedChat
+    messages={messages}
+    onSend={messages => onSend(messages)}
+    user={{
+      _id: 1,
+    }}
+  />
+    );
+  };
 
-const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: '#f0d507',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 export default ChatScreen;

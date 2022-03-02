@@ -1,82 +1,79 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import {StyleSheet, Text, View} from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat'
-
+import React from 'react'
+import { View, Text,FlatList,StyleSheet } from 'react-native'
+import {Container,Card,UserInfo,UserImgWrapper,UserImg,UserInfoText,UserName,PostTime,MessageText,TextSection} from '../../../styles/MessageStyles'
+import {useNavigation} from '@react-navigation/native';
+const Messages = [
+  {
+    id: '1',
+    UserName: 'n1',
+    userImg: require('../../../assets/images/splash.png'),
+    MessageTime:'4 mins ago',
+    messageText:'TestTestTestTestTestTestTestTestTestTestTestTestTest',
+  },
+  {
+    id: '2',
+    UserName: 'n2',
+    userImg: require('../../../assets/images/bcu.png'),
+    MessageTime:'4 mins ago',
+    messageText:'TestTestTestTestTestTestTestTestTestTestTestTestTest',
+  },
+  {
+    id: '3',
+    UserName: 'n3',
+    userImg: require('../../../assets/images/bcu.png'),
+    MessageTime:'4 mins ago',
+    messageText:'TestTestTestTestTestTestTestTestTestTestTestTestTest',
+  },
+  {
+    id: '4',
+    UserName: 'n4',
+    userImg: require('../../../assets/images/bcu.png'),
+    MessageTime:'4 mins ago',
+    messageText:'TestTestTestTestTestTestTestTestTestTestTestTestTest',
+  },
+]
 const ChatList = () => {
-  const [messages, setMessages] = useState([]);
- useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ])
-  }, [])
-
-  const onSend = useCallback((messages = []) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-  }, [])
-
-
+  const navigation = useNavigation();
+;
   return (
-    <GiftedChat
-    messages={messages}
-    onSend={messages => onSend(messages)}
-    user={{
-      _id: 1,
-    }}
-  />
-    );
-  };
+    <Container>
+      <FlatList
+        data={Messages}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({item}) => (
+          <Card onPress={()=> navigation.navigate('ChatScreen', {userName:item.userName})}>
+            <UserInfo>
+              <UserImgWrapper>
+                <UserImg source={item.userImg} styles={styles.userBtn}/>
+              </UserImgWrapper>
+              <TextSection>
+                <UserInfoText>
+                  <UserName>{item.UserName}</UserName>
+                  <PostTime>{item.MessageTime}</PostTime>
+                </UserInfoText>
+                <MessageText>{item.messageText}</MessageText>
+              </TextSection>
+            </UserInfo>
+          </Card>
+        )}
+        showsVerticalScrollIndicator={false}
+      />
+    </Container>
+  )
+}
 
-export default ChatList;
+export default ChatList
 const styles = StyleSheet.create({
-  container: {
+  t1: {
+    borderColor: 'blue',
     flex: 1,
   },
-  header: {
-    height:60,
-    backgroundColor:'#fff',
+  userBtn: {
+    borderColor: '#2e64e5',
+    borderWidth: 2,
+    borderRadius: 3,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginHorizontal: 5,
   },
-  footer: {
-    height:60,
-    backgroundColor:'#fff',
-  },
-  content: {
-    flex:1,
-  },
-
-  elem: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderColor:'#eee',
-    borderBottomWidth:0.5,
-    padding: 5,
-  },
-  userInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  userComment: {
-    padding:8,
-    backgroundColor:'yellow',
-    borderRadius:5,
-  },
-  profile: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: 'yellow',
-  },
-  name: {
-    paddingLeft: 10,
-  }
 });
